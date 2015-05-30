@@ -4,7 +4,8 @@ import java.awt.Point;
 
 public class TestMaze {
 	private static final char TRAVELER = 'x';
-	private static final char OBSTACLE = 'O';
+	private static final char FOOTPRINT = '@';
+	private static final char OBSTACLE = '#';
 	private static final char GROUND = '.';
 	private static final char GOAL = '$';
 
@@ -34,7 +35,7 @@ public class TestMaze {
 
 			// Check for a certain condition to see if the traveler can move.
 			// Let the example position be if the traveler can move another space
-			boolean upCond = false, rightCond = false, downCond = false, leftCond = true;
+			boolean upCond = false, rightCond = false, downCond = false, leftCond = false;
 			if (y > 0){
 				if (map[y-1][x] != OBSTACLE){
 					upCond = true;
@@ -69,30 +70,7 @@ public class TestMaze {
 			}
 		}
 
-		int testX = initX, testY = initY;
-		if (travelerDidReachGoal(t, map)){
-			Direction[] path = t.getPath();
-			for (Direction d : path){
-				System.out.println(d);
-				switch (d){
-					case UP:
-						printMap(new Point(initX, initY), new Point(testX, --testY), map);
-						break;
-					case RIGHT:
-						printMap(new Point(initX, initY), new Point(++testX, testY), map);
-						break;
-					case DOWN:
-						printMap(new Point(initX, initY), new Point(testX, ++testY), map);
-						break;
-					case LEFT:
-						printMap(new Point(initX, initY), new Point(--testX, testY), map);
-						break;
-				}
-			}
-		}
-		else {
-			System.out.println("Could not find a path");
-		}
+		printMap(t.getFootprints(), map);
 	}
 
 	private static boolean travelerDidReachGoal(Traveler t, char[][] map){
@@ -113,6 +91,22 @@ public class TestMaze {
 				else {
 					System.out.print(map[y][x]);
 				}
+			}
+			System.out.println("");
+		}
+		System.out.println("");
+	}
+
+	private static void printMap(Point[] path, char[][] map){
+		int i = 0;
+		for (Point p : path){
+			String s = Integer.toString(++i);
+			map[(int)p.getY()][(int)p.getX()] = s.charAt(s.length()-1);
+		}
+
+		for (int y = 0; y < map.length; y++){
+			for (int x = 0; x < map[0].length; x++){
+				System.out.print(map[y][x]);
 			}
 			System.out.println("");
 		}

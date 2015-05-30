@@ -219,4 +219,12 @@ public class Traveler {
 	public Direction[] getPath(){
 		return this.previousDirections.toArray(new Direction[this.previousDirections.size()]);
 	}
+
+	/**
+	 * Same as the last but getting a list of coordinates
+	 * @return previousPositions
+	 */
+	public Point[] getFootprints(){
+		return this.previousPositions.toArray(new Point[this.previousPositions.size()]);
+	}
 }
